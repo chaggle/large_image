@@ -431,7 +431,7 @@ class TilesItemResource(ItemResource):
         .errorResponse('ID was invalid.')
         .errorResponse('Read access was denied for the item.', 403),
     )
-    @access.public(scope=TokenScope.DATA_READ)
+    #  @access.public(scope=TokenScope.DATA_READ)
     @loadmodel(model='item', map={'itemId': 'item'}, level=AccessType.READ)
     def getTilesInfo(self, item, params):
         return self._getTilesInfo(item, params)
@@ -442,7 +442,7 @@ class TilesItemResource(ItemResource):
         .errorResponse('ID was invalid.')
         .errorResponse('Read access was denied for the item.', 403),
     )
-    @access.public(scope=TokenScope.DATA_READ)
+    #  @access.public(scope=TokenScope.DATA_READ)
     @loadmodel(model='item', map={'itemId': 'item'}, level=AccessType.READ)
     def getInternalMetadata(self, item, params):
         try:
@@ -453,7 +453,7 @@ class TilesItemResource(ItemResource):
     @describeRoute(
         Description('Get test large image metadata.'),
     )
-    @access.public(scope=TokenScope.DATA_READ)
+    #  @access.public(scope=TokenScope.DATA_READ)
     def getTestTilesInfo(self, params):
         item = {'largeImage': {'sourceName': 'test'}}
         imageArgs = self._parseTestParams(params)
@@ -469,7 +469,7 @@ class TilesItemResource(ItemResource):
         .errorResponse('ID was invalid.')
         .errorResponse('Read access was denied for the item.', 403),
     )
-    @access.public(scope=TokenScope.DATA_READ)
+    #  @access.public(scope=TokenScope.DATA_READ)
     @loadmodel(model='item', map={'itemId': 'item'}, level=AccessType.READ)
     def getDZIInfo(self, item, params):
         if 'encoding' in params and params['encoding'] not in ('JPEG', 'PNG'):
@@ -559,9 +559,9 @@ class TilesItemResource(ItemResource):
     )
     # Without caching, this checks for permissions every time.  By using the
     # LoadModelCache, three database lookups are avoided, which saves around
-    # 6 ms in tests. We also avoid the @access.public decorator and directly
+    # 6 ms in tests. We also avoid the #  @access.public decorator and directly
     # set the accessLevel attribute on the method.
-    #   @access.public(cookie=True, scope=TokenScope.DATA_READ)
+    #   #  @access.public(cookie=True, scope=TokenScope.DATA_READ)
     #   @loadmodel(model='item', map={'itemId': 'item'}, level=AccessType.READ)
     #   def getTile(self, item, z, x, y, params):
     #       return self._getTile(item, z, x, y, params, True)
@@ -622,7 +622,7 @@ class TilesItemResource(ItemResource):
                paramType='path')
         .produces(ImageMimeTypes),
     )
-    @access.public(cookie=True, scope=TokenScope.DATA_READ)
+    #  @access.public(cookie=True, scope=TokenScope.DATA_READ)
     def getTestTile(self, z, x, y, params):
         item = {'largeImage': {'sourceName': 'test'}}
         imageArgs = self._parseTestParams(params)
@@ -640,7 +640,7 @@ class TilesItemResource(ItemResource):
         .errorResponse('ID was invalid.')
         .errorResponse('Read access was denied for the item.', 403),
     )
-    @access.public(cookie=True, scope=TokenScope.DATA_READ)
+    #  @access.public(cookie=True, scope=TokenScope.DATA_READ)
     @loadmodel(model='item', map={'itemId': 'item'}, level=AccessType.READ)
     def getDZITile(self, item, level, xandy, params):
         _adjustParams(params)
@@ -746,7 +746,7 @@ class TilesItemResource(ItemResource):
         .errorResponse('ID was invalid.')
         .errorResponse('Read access was denied for the item.', 403),
     )
-    @access.public(cookie=True, scope=TokenScope.DATA_READ)
+    #  @access.public(cookie=True, scope=TokenScope.DATA_READ)
     @loadmodel(model='item', map={'itemId': 'item'}, level=AccessType.READ)
     def getTilesThumbnail(self, item, params):
         _adjustParams(params)
@@ -873,7 +873,7 @@ class TilesItemResource(ItemResource):
         .errorResponse('Read access was denied for the item.', 403)
         .errorResponse('Insufficient memory.'),
     )
-    @access.public(cookie=True, scope=TokenScope.DATA_READ)
+    #  @access.public(cookie=True, scope=TokenScope.DATA_READ)
     @loadmodel(model='item', map={'itemId': 'item'}, level=AccessType.READ)
     def getTilesRegion(self, item, params):
         _adjustParams(params)
@@ -954,7 +954,7 @@ class TilesItemResource(ItemResource):
         .errorResponse('ID was invalid.')
         .errorResponse('Read access was denied for the item.', 403),
     )
-    @access.public(cookie=True, scope=TokenScope.DATA_READ)
+    #  @access.public(cookie=True, scope=TokenScope.DATA_READ)
     @loadmodel(model='item', map={'itemId': 'item'}, level=AccessType.READ)
     def getTilesPixel(self, item, params):
         params = self._parseParams(params, True, [
@@ -1039,7 +1039,7 @@ class TilesItemResource(ItemResource):
         .errorResponse('ID was invalid.')
         .errorResponse('Read access was denied for the item.', 403),
     )
-    @access.public(scope=TokenScope.DATA_READ)
+    #  @access.public(scope=TokenScope.DATA_READ)
     @loadmodel(model='item', map={'itemId': 'item'}, level=AccessType.READ)
     def getHistogram(self, item, params):
         _adjustParams(params)
@@ -1104,7 +1104,7 @@ class TilesItemResource(ItemResource):
         .errorResponse('ID was invalid.')
         .errorResponse('Read access was denied for the item.', 403),
     )
-    @access.public(scope=TokenScope.DATA_READ)
+    #  @access.public(scope=TokenScope.DATA_READ)
     @loadmodel(model='item', map={'itemId': 'item'}, level=AccessType.READ)
     def getBandInformation(self, item, params):
         _adjustParams(params)
@@ -1121,7 +1121,7 @@ class TilesItemResource(ItemResource):
         .errorResponse('ID was invalid.')
         .errorResponse('Read access was denied for the item.', 403),
     )
-    @access.public(scope=TokenScope.DATA_READ)
+    #  @access.public(scope=TokenScope.DATA_READ)
     @loadmodel(model='item', map={'itemId': 'item'}, level=AccessType.READ)
     def getAssociatedImagesList(self, item, params):
         try:
@@ -1150,7 +1150,7 @@ class TilesItemResource(ItemResource):
         .errorResponse('ID was invalid.')
         .errorResponse('Read access was denied for the item.', 403),
     )
-    @access.public(cookie=True, scope=TokenScope.DATA_READ)
+    #  @access.public(cookie=True, scope=TokenScope.DATA_READ)
     def getAssociatedImage(self, itemId, image, params):
         _adjustParams(params)
         # We can't use the loadmodel decorator, as we want to allow cookies
@@ -1189,7 +1189,7 @@ class TilesItemResource(ItemResource):
         .errorResponse('ID was invalid.')
         .errorResponse('Read access was denied for the item.', 403),
     )
-    @access.public(scope=TokenScope.DATA_READ)
+    #  @access.public(scope=TokenScope.DATA_READ)
     def getAssociatedImageMetadata(self, item, image, params):
         _handleETag('getAssociatedImageMetadata', item, image)
         tilesource = self.imageItemModel._loadTileSource(item, **params)
@@ -1323,7 +1323,7 @@ class TilesItemResource(ItemResource):
         .errorResponse('Read access was denied for the item.', 403)
         .errorResponse('Insufficient memory.'),
     )
-    @access.public(cookie=True, scope=TokenScope.DATA_READ)
+    #  @access.public(cookie=True, scope=TokenScope.DATA_READ)
     @loadmodel(model='item', map={'itemId': 'item'}, level=AccessType.READ)
     def tileFrames(self, item, params):
         cache = params.pop('cache', False)
@@ -1421,7 +1421,7 @@ class TilesItemResource(ItemResource):
         .errorResponse('ID was invalid.')
         .errorResponse('Read access was denied for the item.', 403),
     )
-    @access.public(cookie=True, scope=TokenScope.DATA_READ)
+    #  @access.public(cookie=True, scope=TokenScope.DATA_READ)
     @loadmodel(model='item', map={'itemId': 'item'}, level=AccessType.READ)
     def tileFramesQuadInfo(self, item, params):
         metadata = self.imageItemModel.getMetadata(item)

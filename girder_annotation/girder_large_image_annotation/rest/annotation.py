@@ -90,7 +90,7 @@ class AnnotationResource(Resource):
         .errorResponse()
         .errorResponse('Read access was denied on the parent item.', 403),
     )
-    # @access.public(scope=TokenScope.DATA_READ)
+    # #  @access.public(scope=TokenScope.DATA_READ)
     @filtermodel(model='annotation', plugin='large_image')
     def find(self, params):
         limit, offset, sort = self.getPagingParameters(params, 'lowerName')
@@ -127,7 +127,7 @@ class AnnotationResource(Resource):
                'all IDs must be unique.')
         .errorResponse(),
     )
-    @access.public(scope=TokenScope.DATA_READ)
+    #  @access.public(scope=TokenScope.DATA_READ)
     def getAnnotationSchema(self, params):
         return AnnotationSchema.annotationSchema
 
@@ -173,7 +173,7 @@ class AnnotationResource(Resource):
         .errorResponse('Read access was denied for the annotation.', 403)
         .notes('Use "size" or "details" as possible sort keys.'),
     )
-    # @access.public(cookie=True, scope=TokenScope.DATA_READ)
+    # #  @access.public(cookie=True, scope=TokenScope.DATA_READ)
     def getAnnotation(self, id, params):
         user = self.getCurrentUser()
         annotation = Annotation().load(
@@ -193,7 +193,7 @@ class AnnotationResource(Resource):
         .errorResponse('Read access was denied for the annotation.', 403)
         .notes('Use "size" or "details" as possible sort keys.'),
     )
-    # @access.public(cookie=True, scope=TokenScope.DATA_READ)
+    # #  @access.public(cookie=True, scope=TokenScope.DATA_READ)
     @loadmodel(model='annotation', plugin='large_image', getElements=False, level=AccessType.READ)
     def getAnnotationWithFormat(self, annotation, format):
         _handleETag('getAnnotationWithFormat', annotation, format, max_age=86400 * 30)
@@ -427,7 +427,7 @@ class AnnotationResource(Resource):
         .pagingParams(defaultSort='updated', defaultSortDir=-1)
         .errorResponse(),
     )
-    # @access.public(scope=TokenScope.DATA_READ)
+    # #  @access.public(scope=TokenScope.DATA_READ)
     def findAnnotatedImages(self, params):
         limit, offset, sort = self.getPagingParameters(
             params, 'updated', SortDir.DESCENDING)
@@ -484,7 +484,7 @@ class AnnotationResource(Resource):
                       defaultSortDir=SortDir.DESCENDING)
         .errorResponse('Read access was denied for the annotation.', 403),
     )
-    @access.public(cookie=True, scope=TokenScope.DATA_READ)
+    # #  @access.public(cookie=True, scope=TokenScope.DATA_READ)
     def getAnnotationHistoryList(self, id, limit, offset, sort):
         return list(Annotation().versionList(id, self.getCurrentUser(), limit, offset, sort))
 
@@ -496,7 +496,7 @@ class AnnotationResource(Resource):
         .errorResponse('Annotation history version not found.')
         .errorResponse('Read access was denied for the annotation.', 403),
     )
-    @access.public(cookie=True, scope=TokenScope.DATA_READ)
+    # #  @access.public(cookie=True, scope=TokenScope.DATA_READ)
     def getAnnotationHistory(self, id, version):
         result = Annotation().getVersion(id, version, self.getCurrentUser())
         if result is None:
@@ -516,7 +516,7 @@ class AnnotationResource(Resource):
         .errorResponse('Annotation history version not found.')
         .errorResponse('Read access was denied for the annotation.', 403),
     )
-    # @access.public(scope=TokenScope.DATA_WRITE)
+    # #  @access.public(scope=TokenScope.DATA_WRITE)
     def revertAnnotationHistory(self, id, version):
         setResponseTimeLimit(86400)
         annotation = Annotation().revertVersion(id, version, self.getCurrentUser())
@@ -535,7 +535,7 @@ class AnnotationResource(Resource):
         .errorResponse('ID was invalid.')
         .errorResponse('Read access was denied for the item.', 403),
     )
-    # @access.public(cookie=True, scope=TokenScope.DATA_READ)
+    # #  @access.public(cookie=True, scope=TokenScope.DATA_READ)
     def getItemAnnotations(self, item):
         user = self.getCurrentUser()
         query = {'_active': {'$ne': False}, 'itemId': item['_id']}
@@ -638,7 +638,7 @@ class AnnotationResource(Resource):
         .errorResponse('ID was invalid.')
         .errorResponse('Read access was denied for the item.', 403),
     )
-    # @access.public(cookie=True, scope=TokenScope.DATA_READ)
+    # #  @access.public(cookie=True, scope=TokenScope.DATA_READ)
     def getItemPlottableElements(self, item, annotations, adjacentItems, sources=None, uuid=None):
         user = self.getCurrentUser()
         if adjacentItems != '__all__':
@@ -682,7 +682,7 @@ class AnnotationResource(Resource):
         .errorResponse('ID was invalid.')
         .errorResponse('Read access was denied for the item.', 403),
     )
-    # @access.public(cookie=True, scope=TokenScope.DATA_READ)
+    # #  @access.public(cookie=True, scope=TokenScope.DATA_READ)
     def getItemPlottableData(
             self, item, keys, adjacentItems, annotations, requiredKeys,
             sources=None, compute=None, uuid=None):
@@ -783,7 +783,7 @@ class AnnotationResource(Resource):
                'subfolders for annotations', required=False, default=True, dataType='boolean')
         .errorResponse(),
     )
-    # @access.public(scope=TokenScope.DATA_READ)
+    # #  @access.public(scope=TokenScope.DATA_READ)
     def existFolderAnnotations(self, id, recurse):
         user = self.getCurrentUser()
         if not user:
@@ -803,7 +803,7 @@ class AnnotationResource(Resource):
         .pagingParams(defaultSort='created', defaultSortDir=-1)
         .errorResponse(),
     )
-    # @access.public(scope=TokenScope.DATA_READ)
+    # #  @access.public(scope=TokenScope.DATA_READ)
     def returnFolderAnnotations(self, id, recurse, limit, offset, sort):
         user = self.getCurrentUser()
         if not user:
@@ -913,7 +913,7 @@ class AnnotationResource(Resource):
         setResponseTimeLimit(86400)
         return Annotation().removeOldAnnotations(True, age, versions)
 
-    # @access.public(scope=TokenScope.DATA_READ)
+    # #  @access.public(scope=TokenScope.DATA_READ)
     @autoDescribeRoute(
         Description('Get annotation counts for a list of items.')
         .param('items', 'A comma-separated list of item ids.')

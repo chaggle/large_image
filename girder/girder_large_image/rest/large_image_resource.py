@@ -291,7 +291,7 @@ class LargeImageResource(Resource):
     @describeRoute(
         Description('Get public settings for large image display.'),
     )
-    @access.public(scope=TokenScope.DATA_READ)
+    #  @access.public(scope=TokenScope.DATA_READ)
     def getPublicSettings(self, params):
         keys = [getattr(constants.PluginSettings, key)
                 for key in dir(constants.PluginSettings)
@@ -587,7 +587,7 @@ class LargeImageResource(Resource):
                     'higher priority for an extension or mime type with that '
                     'source.'),
     )
-    @access.public(scope=TokenScope.DATA_READ)
+    #  @access.public(scope=TokenScope.DATA_READ)
     def listSources(self, params):
         return large_image.tilesource.listSources(
             girder_tilesource.AvailableGirderTileSources)['sources']

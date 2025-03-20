@@ -216,7 +216,7 @@ def _itemFindRecursive(  # noqa
     return origItemFind(folderId, text, name, limit, offset, sort, filters)
 
 
-@access.public(scope=TokenScope.DATA_READ)
+#  @access.public(scope=TokenScope.DATA_READ)
 @autoDescribeRoute(
     Description('Get a config file.')
     .notes(
@@ -245,7 +245,7 @@ def getYAMLConfigFile(self, folder, name):
     return yamlConfigFile(folder, name, user)
 
 
-@access.public(scope=TokenScope.DATA_READ)
+#  @access.public(scope=TokenScope.DATA_READ)
 @autoDescribeRoute(
     Description('Get a config file.')
     .notes(
