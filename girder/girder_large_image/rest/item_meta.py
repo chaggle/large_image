@@ -74,7 +74,7 @@ class InternalMetadataItemResource(Item):
         .errorResponse('ID was invalid.')
         .errorResponse('Write access was denied for the item.', 403),
     )
-    @access.user(scope=TokenScope.DATA_WRITE)
+  #  @access.user(scope=TokenScope.DATA_WRITE)
     @loadmodel(model='item', map={'itemId': 'item'}, level=AccessType.WRITE)
     def updateMetadataKey(self, item, key, params):
         item[key] = self.getBodyJson()
@@ -92,7 +92,7 @@ class InternalMetadataItemResource(Item):
         .errorResponse('ID was invalid.')
         .errorResponse('Write access was denied for the item.', 403),
     )
-    @access.user(scope=TokenScope.DATA_WRITE)
+  #  @access.user(scope=TokenScope.DATA_WRITE)
     @loadmodel(model='item', map={'itemId': 'item'}, level=AccessType.READ)
     def deleteMetadataKey(self, item, key, params):
         if key in item:

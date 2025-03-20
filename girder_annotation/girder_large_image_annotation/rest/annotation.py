@@ -90,7 +90,7 @@ class AnnotationResource(Resource):
         .errorResponse()
         .errorResponse('Read access was denied on the parent item.', 403),
     )
-    @access.public(scope=TokenScope.DATA_READ)
+    # @access.public(scope=TokenScope.DATA_READ)
     @filtermodel(model='annotation', plugin='large_image')
     def find(self, params):
         limit, offset, sort = self.getPagingParameters(params, 'lowerName')
@@ -173,7 +173,7 @@ class AnnotationResource(Resource):
         .errorResponse('Read access was denied for the annotation.', 403)
         .notes('Use "size" or "details" as possible sort keys.'),
     )
-    @access.public(cookie=True, scope=TokenScope.DATA_READ)
+    # @access.public(cookie=True, scope=TokenScope.DATA_READ)
     def getAnnotation(self, id, params):
         user = self.getCurrentUser()
         annotation = Annotation().load(
@@ -193,7 +193,7 @@ class AnnotationResource(Resource):
         .errorResponse('Read access was denied for the annotation.', 403)
         .notes('Use "size" or "details" as possible sort keys.'),
     )
-    @access.public(cookie=True, scope=TokenScope.DATA_READ)
+    # @access.public(cookie=True, scope=TokenScope.DATA_READ)
     @loadmodel(model='annotation', plugin='large_image', getElements=False, level=AccessType.READ)
     def getAnnotationWithFormat(self, annotation, format):
         _handleETag('getAnnotationWithFormat', annotation, format, max_age=86400 * 30)
@@ -301,7 +301,7 @@ class AnnotationResource(Resource):
         .errorResponse('Invalid JSON passed in request body.')
         .errorResponse("Validation Error: JSON doesn't follow schema."),
     )
-    @access.user(scope=TokenScope.DATA_WRITE)
+    # @access.user(scope=TokenScope.DATA_WRITE)
     @loadmodel(map={'itemId': 'item'}, model='item', level=AccessType.READ)
     @filtermodel(model='annotation', plugin='large_image')
     def createAnnotation(self, item, params):
@@ -330,7 +330,7 @@ class AnnotationResource(Resource):
         .errorResponse('ID was invalid.')
         .errorResponse('Write access was denied for the item.', 403),
     )
-    @access.user(scope=TokenScope.DATA_WRITE)
+  ##  @access.user(scope=TokenScope.DATA_WRITE)
     @loadmodel(model='annotation', plugin='large_image', level=AccessType.READ)
     @filtermodel(model='annotation', plugin='large_image')
     def copyAnnotation(self, annotation, params):
@@ -356,7 +356,7 @@ class AnnotationResource(Resource):
         .errorResponse('Invalid JSON passed in request body.')
         .errorResponse("Validation Error: JSON doesn't follow schema."),
     )
-    @access.user(scope=TokenScope.DATA_WRITE)
+    # @access.user(scope=TokenScope.DATA_WRITE)
     @loadmodel(model='annotation', plugin='large_image', level=AccessType.WRITE)
     @filtermodel(model='annotation', plugin='large_image')
     def updateAnnotation(self, annotation, params):
@@ -400,7 +400,7 @@ class AnnotationResource(Resource):
         .errorResponse('ID was invalid.')
         .errorResponse('Write access was denied for the annotation.', 403),
     )
-    @access.user(scope=TokenScope.DATA_WRITE)
+    # @access.user(scope=TokenScope.DATA_WRITE)
     # Load with a limit of 1 so that we don't bother getting most annotations
     @loadmodel(model='annotation', plugin='large_image', getElements=False, level=AccessType.WRITE)
     def deleteAnnotation(self, annotation, params):
@@ -427,7 +427,7 @@ class AnnotationResource(Resource):
         .pagingParams(defaultSort='updated', defaultSortDir=-1)
         .errorResponse(),
     )
-    @access.public(scope=TokenScope.DATA_READ)
+    # @access.public(scope=TokenScope.DATA_READ)
     def findAnnotatedImages(self, params):
         limit, offset, sort = self.getPagingParameters(
             params, 'updated', SortDir.DESCENDING)
@@ -448,7 +448,7 @@ class AnnotationResource(Resource):
         .errorResponse('ID was invalid.')
         .errorResponse('Admin access was denied for the annotation.', 403),
     )
-    @access.user(scope=TokenScope.DATA_OWN)
+    # @access.user(scope=TokenScope.DATA_OWN)
     @loadmodel(model='annotation', plugin='large_image', getElements=False, level=AccessType.ADMIN)
     def getAnnotationAccess(self, annotation, params):
         return Annotation().getFullAccessList(annotation)
@@ -462,7 +462,7 @@ class AnnotationResource(Resource):
         .errorResponse('ID was invalid.')
         .errorResponse('Admin access was denied for the annotation.', 403),
     )
-    @access.user(scope=TokenScope.DATA_OWN)
+    # @access.user(scope=TokenScope.DATA_OWN)
     @loadmodel(model='annotation', plugin='large_image', getElements=False, level=AccessType.ADMIN)
     @filtermodel(model=Annotation, addFields={'access'})
     def updateAnnotationAccess(self, annotation, params):
@@ -516,7 +516,7 @@ class AnnotationResource(Resource):
         .errorResponse('Annotation history version not found.')
         .errorResponse('Read access was denied for the annotation.', 403),
     )
-    @access.public(scope=TokenScope.DATA_WRITE)
+    # @access.public(scope=TokenScope.DATA_WRITE)
     def revertAnnotationHistory(self, id, version):
         setResponseTimeLimit(86400)
         annotation = Annotation().revertVersion(id, version, self.getCurrentUser())
@@ -535,7 +535,7 @@ class AnnotationResource(Resource):
         .errorResponse('ID was invalid.')
         .errorResponse('Read access was denied for the item.', 403),
     )
-    @access.public(cookie=True, scope=TokenScope.DATA_READ)
+    # @access.public(cookie=True, scope=TokenScope.DATA_READ)
     def getItemAnnotations(self, item):
         user = self.getCurrentUser()
         query = {'_active': {'$ne': False}, 'itemId': item['_id']}
@@ -573,7 +573,7 @@ class AnnotationResource(Resource):
         .errorResponse('Invalid JSON passed in request body.')
         .errorResponse("Validation Error: JSON doesn't follow schema."),
     )
-    @access.user(scope=TokenScope.DATA_WRITE)
+    # @access.user(scope=TokenScope.DATA_WRITE)
     def createItemAnnotations(self, item, annotations):
         user = self.getCurrentUser()
         if hasattr(annotations, 'read'):
@@ -605,7 +605,7 @@ class AnnotationResource(Resource):
         .errorResponse('ID was invalid.')
         .errorResponse('Write access was denied for the item.', 403),
     )
-    @access.user(scope=TokenScope.DATA_WRITE)
+    # @access.user(scope=TokenScope.DATA_WRITE)
     def deleteItemAnnotations(self, item):
         setResponseTimeLimit(86400)
         user = self.getCurrentUser()
@@ -638,7 +638,7 @@ class AnnotationResource(Resource):
         .errorResponse('ID was invalid.')
         .errorResponse('Read access was denied for the item.', 403),
     )
-    @access.public(cookie=True, scope=TokenScope.DATA_READ)
+    # @access.public(cookie=True, scope=TokenScope.DATA_READ)
     def getItemPlottableElements(self, item, annotations, adjacentItems, sources=None, uuid=None):
         user = self.getCurrentUser()
         if adjacentItems != '__all__':
@@ -682,7 +682,7 @@ class AnnotationResource(Resource):
         .errorResponse('ID was invalid.')
         .errorResponse('Read access was denied for the item.', 403),
     )
-    @access.public(cookie=True, scope=TokenScope.DATA_READ)
+    # @access.public(cookie=True, scope=TokenScope.DATA_READ)
     def getItemPlottableData(
             self, item, keys, adjacentItems, annotations, requiredKeys,
             sources=None, compute=None, uuid=None):
@@ -783,7 +783,7 @@ class AnnotationResource(Resource):
                'subfolders for annotations', required=False, default=True, dataType='boolean')
         .errorResponse(),
     )
-    @access.public(scope=TokenScope.DATA_READ)
+    # @access.public(scope=TokenScope.DATA_READ)
     def existFolderAnnotations(self, id, recurse):
         user = self.getCurrentUser()
         if not user:
@@ -803,7 +803,7 @@ class AnnotationResource(Resource):
         .pagingParams(defaultSort='created', defaultSortDir=-1)
         .errorResponse(),
     )
-    @access.public(scope=TokenScope.DATA_READ)
+    # @access.public(scope=TokenScope.DATA_READ)
     def returnFolderAnnotations(self, id, recurse, limit, offset, sort):
         user = self.getCurrentUser()
         if not user:
@@ -827,7 +827,7 @@ class AnnotationResource(Resource):
         .param('id', 'The ID of the folder', required=True, paramType='path')
         .errorResponse('ID was invalid.'),
     )
-    @access.user(scope=TokenScope.DATA_READ)
+    # @access.user(scope=TokenScope.DATA_READ)
     @loadmodel(model='folder', level=AccessType.READ)
     def canCreateFolderAnnotations(self, folder):
         user = self.getCurrentUser()
@@ -844,7 +844,7 @@ class AnnotationResource(Resource):
                'annotations from subfolders', required=False, default=False, dataType='boolean')
         .errorResponse('ID was invalid.'),
     )
-    @access.user(scope=TokenScope.DATA_OWN)
+    # @access.user(scope=TokenScope.DATA_OWN)
     def setFolderAnnotationAccess(self, id, params):
         setResponseTimeLimit(86400)
         user = self.getCurrentUser()
@@ -873,7 +873,7 @@ class AnnotationResource(Resource):
                'annotations from subfolders', required=False, default=False, dataType='boolean')
         .errorResponse('ID was invalid.'),
     )
-    @access.user(scope=TokenScope.DATA_WRITE)
+    # @access.user(scope=TokenScope.DATA_WRITE)
     def deleteFolderAnnotations(self, id, params):
         setResponseTimeLimit(86400)
         user = self.getCurrentUser()
@@ -895,7 +895,7 @@ class AnnotationResource(Resource):
                'annotation.', required=False, dataType='int', default=10)
         .errorResponse(),
     )
-    @access.admin(scope=TokenScope.DATA_READ)
+    # @access.admin(scope=TokenScope.DATA_READ)
     def getOldAnnotations(self, age, versions):
         setResponseTimeLimit(86400)
         return Annotation().removeOldAnnotations(False, age, versions)
@@ -908,12 +908,12 @@ class AnnotationResource(Resource):
                'annotation.', required=False, dataType='int', default=10)
         .errorResponse(),
     )
-    @access.admin(scope=TokenScope.DATA_WRITE)
+    # @access.admin(scope=TokenScope.DATA_WRITE)
     def deleteOldAnnotations(self, age, versions):
         setResponseTimeLimit(86400)
         return Annotation().removeOldAnnotations(True, age, versions)
 
-    @access.public(scope=TokenScope.DATA_READ)
+    # @access.public(scope=TokenScope.DATA_READ)
     @autoDescribeRoute(
         Description('Get annotation counts for a list of items.')
         .param('items', 'A comma-separated list of item ids.')
@@ -934,7 +934,7 @@ class AnnotationResource(Resource):
                 results['referenced'][itemId] = True
         return results
 
-    @access.user(scope=TokenScope.DATA_WRITE)
+    # @access.user(scope=TokenScope.DATA_WRITE)
     @filtermodel(model='annotation', plugin='large_image')
     @autoDescribeRoute(
         Description('Set metadata (annotation.attributes) fields on an annotation.')
@@ -954,7 +954,7 @@ class AnnotationResource(Resource):
     def setMetadata(self, annotation, metadata, allowNull):
         return Annotation().setMetadata(annotation, metadata, allowNull=allowNull)
 
-    @access.user(scope=TokenScope.DATA_WRITE)
+    # @access.user(scope=TokenScope.DATA_WRITE)
     @filtermodel(model='annotation', plugin='large_image')
     @autoDescribeRoute(
         Description('Delete metadata (annotation.attributes) fields on an annotation.')

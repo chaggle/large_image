@@ -448,7 +448,7 @@ class LargeImageResource(Resource):
                 removed += 1
         return removed
 
-    @access.user(scope=TokenScope.DATA_WRITE)
+  #  @access.user(scope=TokenScope.DATA_WRITE)
     @autoDescribeRoute(
         Description('Create large images for all items within a folder.')
         .notes('Does not work for new items with multiple files.')
